@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class CustomerUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     @Getter
     private final User user;
     @Override
