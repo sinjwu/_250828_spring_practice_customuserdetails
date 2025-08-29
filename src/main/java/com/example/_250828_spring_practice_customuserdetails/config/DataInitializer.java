@@ -53,22 +53,46 @@ public class DataInitializer implements CommandLineRunner {
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
                 .build();
-
         userRepository.save(manager);
         log.info("👨‍💼 매니저 계정 생성: {}", manager.getUsername());
-        User lockedUser = User.builder()
+        User user = User.builder()
+                .username("user")
+                .password(passwordEncoder.encode("user123"))
+                .email("user@example.com")
+                .fullName("일반 사용자")
+                .roles(Set.of(Role.USER))
+                .enabled(true)
+                .accountNonLocked(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .build();
+        userRepository.save(user);
+        log.info("👤 일반 사용자 계정 생성: {}", user.getUsername());
+        User disabledUser = User.builder()
                 .username("disabled")
                 .password(passwordEncoder.encode("disabled123"))
                 .email("disabled@example.com")
-                .fullName("잠긴 사용자")
+                .fullName("비활성화된 사용자")
                 .roles(Set.of(Role.USER))
                 .enabled(false)
+                .accountNonLocked(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .build();
+        userRepository.save(disabledUser);
+        log.info("❌ 비활성화 계정 생성: {}", disabledUser.getUsername());
+        User lockedUser = User.builder()
+                .username("locked")
+                .password(passwordEncoder.encode("locked123"))
+                .email("locked@example.com")
+                .fullName("잠긴 사용자")
+                .roles(Set.of(Role.USER))
+                .enabled(true)
                 .accountNonLocked(true)
                 .accountNonLocked(false)
                 .credentialsNonExpired(true)
                 .build();
-
         userRepository.save(lockedUser);
-        log.info("❌ 비활성화 계정 생성: {}", lockedUser.getUsername());
+        log.info("🔒 잠긴 계정 생성: {}", lockedUser.getUsername());
     }
 }
