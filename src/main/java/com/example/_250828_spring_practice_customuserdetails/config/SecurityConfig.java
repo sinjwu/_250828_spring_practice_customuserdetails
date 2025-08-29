@@ -57,6 +57,10 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 )
+                // H2 Console을 위한 설정
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**")
+                ).headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
                 .build();
     }
 }

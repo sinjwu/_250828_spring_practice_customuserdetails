@@ -1,10 +1,6 @@
 package com.example._250828_spring_practice_customuserdetails.model;
 
-import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 public enum Role {

@@ -1,13 +1,16 @@
 package com.example._250828_spring_practice_customuserdetails.security;
 
+import com.example._250828_spring_practice_customuserdetails.model.Role;
 import com.example._250828_spring_practice_customuserdetails.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
@@ -15,17 +18,19 @@ public class CustomUserDetails implements UserDetails {
     private final User user;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        Set<Role> roles = user.getRoles();
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toSet());
     }
     @Override
     public String getPassword() {
-        return "";
+        return user.getPassword();
     }
     @Override
     public String getUsername() {
-        return "";
+        return user.getUsername();
     }
-    public boolean isAccountedNonExpired() {
+    public boolean isAccountNonExpired() {
         return user.getAccountNonExpired();
     }
     public boolean isCredentialsNonExpired() {
